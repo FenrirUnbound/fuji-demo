@@ -27,4 +27,3 @@ curl -n -X POST https://api.heroku.com/apps/${HEROKU_APP}/builds \
 -H "Authorization: Bearer ${HEROKU_API_KEY}"
 
 echo "Done building your app!"
-
