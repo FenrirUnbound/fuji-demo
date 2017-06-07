@@ -8,9 +8,18 @@ shared:
 jobs:
   main:
     steps:
+      - install_packer: . ./config/install_packer.sh
+      - packer_validate: packer validate config/packer.json
       - install-dependencies: npm install
       - test: npm test
+    secrets:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
   deploy:
-      steps:
-        - install_packer: . ./config/install_packer.sh
-        - hello: echo hello
+    steps:
+      - install_packer: . ./config/install_packer.sh
+      - packer_validate: packer validate config/packer.json
+      - packer_build: . ./config/packer_build.sh
+    secrets:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
