@@ -1,0 +1,29 @@
+{
+  "variables": {
+    "base_ami": "ami-2439c444"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "region": "us-west-2",
+    "source_ami": "{{user `base_ami`}}",
+    "instance_type": "t2.micro",
+    "ssh_username": "ubuntu",
+    "ami_name": "screwdriver-fujiapp-demo {{timestamp}}",
+    "associate_public_ip_address": true
+  }],
+  "provisioners": [
+  {
+    "type": "file",
+    "source": "app",
+    "destination": "/tmp/application"
+  },
+  {
+    "type": "file",
+    "source": "config/fujiapp.service",
+    "destination": "/tmp/fujiapp.service"
+  },
+  {
+    "type": "shell",
+    "script": "config/setup.sh"
+  }]
+}
