@@ -1,6 +1,13 @@
+workflow:
+  - deploy
+
 jobs:
-    main:
-        image: node:6
-        steps:
-            - install-dependencies: npm install
-            - test: npm test
+  main:
+    image: node:6
+    steps:
+      - install-dependencies: npm install
+      - test: npm test
+  deploy:
+    image: hashicorp/packer
+    steps:
+      - hello: echo hello
