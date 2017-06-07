@@ -8,6 +8,8 @@ shared:
 jobs:
   main:
     steps:
+      - assert_aptget: apt-get update
+      - assert_install: apt-get install unzip
       - install-dependencies: npm install
       - test: npm test
   deploy:
