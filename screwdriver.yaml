@@ -1,5 +1,6 @@
 ---
 workflow:
+  - package
   - deploy
 
 shared:
@@ -15,11 +16,20 @@ jobs:
     secrets:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
-  deploy:
+  package:
     steps:
       - install_packer: . ./config/install_packer.sh
       - packer_validate: packer validate config/packer.json
       - packer_build: . ./config/packer_build.sh
+    secrets:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+  deploy:
+    steps:
+      - install_terraform: cd terraform && . ./install.sh && cd ..
+      - install_get: cd terraform && . ./get.sh && cd ..
+      - install_plan: cd terraform && . ./plan.sh && cd ..
+      - install_apply: cd terraform && . ./apply.sh && cd ..
     secrets:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
