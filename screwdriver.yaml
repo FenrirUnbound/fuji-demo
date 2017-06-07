@@ -1,6 +1,16 @@
+---
+workflow:
+  - deploy
+
+shared:
+  image: node:8
+
 jobs:
-    main:
-        image: node:6
-        steps:
-            - install-dependencies: npm install
-            - test: npm test
+  main:
+    steps:
+      - install-dependencies: npm install
+      - test: npm test
+  deploy:
+      steps:
+        - install_packer: . ./config/install_packer.sh
+        - hello: echo hello
