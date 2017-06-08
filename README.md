@@ -29,6 +29,7 @@ In order to add the secrets needed for this app to deploy, you will need your He
 ##### Heroku API key
 Navigate to your [Heroku Account settings page](https://dashboard.heroku.com/account). Find your API Key and click Reveal. Make note this displayed value.
 
+
 ##### Heroku application name
 Navigate to the [Heroku Apps page](https://dashboard.heroku.com/apps). Click `New` in the top right corner and select Create New App. Copy your new application name.
 
