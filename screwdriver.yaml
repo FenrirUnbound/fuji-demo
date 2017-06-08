@@ -13,6 +13,7 @@ jobs:
       - packer_validate: packer validate config/packer.json
       - packer_build: . ./config/packer_build.sh
       - deploy: . ./config/deploy.sh
+      - health_check: . ./config/health_check.sh
       - func_test: HOST=`/opt/sd/meta get public_dns` npm run functional
     secrets:
       - AWS_ACCESS_KEY_ID
