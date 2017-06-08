@@ -1,25 +1,21 @@
 #!/bin/sh
 
-sudo apt-get -y update
+apt-get -y update
 
-# download node
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get install -y nodejs
+# install pip
+apt-get -y install python-dev
 
-# move application to proper location
-APP_LOCATION=/usr/src/app
+# install packer
+wget https://releases.hashicorp.com/packer/1.0.0/packer_1.0.0_linux_amd64.zip
+apt-get install unzip
+unzip packer_1.0.0_linux_amd64.zip
+mv packer /usr/local/bin
+packer version
 
-sudo mv /tmp/application $APP_LOCATION
-sudo chown -R ubuntu:nogroup $APP_LOCATION
-sudo chmod -R g+r $APP_LOCATION
-sudo chmod -R g-w $APP_LOCATION
+# install awscli
+curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+unzip awscli-bundle.zip
+python ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
-# install node dependencies
-cd $APP_LOCATION
-npm install
-
-# move service file to proper location
-sudo mv /tmp/fujiapp.service /etc/systemd/system/fujiapp.service
-
-# configure screwdriver service to be automatically started at boot time
-sudo systemctl enable fujiapp
+# install jq
+apt-get install jq
