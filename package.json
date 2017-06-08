@@ -7,6 +7,7 @@
   "description": "Test app for Screwdriver",
   "main": "index.js",
   "scripts": {
+    "functional": "protractor ./spec/conf.js",
     "start": "node ./index.js",
     "test": "jenkins-mocha test/**"
   },
@@ -39,6 +40,7 @@
     "chai": "^3.5.0",
     "jenkins-mocha": "^4.1.2",
     "mockery": "^2.0.0",
+    "protractor": "^5.1.2",
     "sinon": "^1.17.7"
   },
   "dependencies": {
