@@ -24,6 +24,6 @@
   },
   {
     "type": "shell",
-    "script": "config/setup.sh"
+    "script": "config/packer_setup.sh"
   }]
 }

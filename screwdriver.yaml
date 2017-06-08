@@ -1,42 +1,24 @@
 ---
-workflow:
-  - package
-  - deploy
-  - test_it
-
 shared:
   image: node:8
+  environment:
+    AWS_DEFAULT_REGION: us-west-2
 
 jobs:
   main:
     steps:
+      - build_depends: . ./config/setup.sh
       - install-dependencies: npm install
-      - test: npm test
-  package:
-    steps:
-      - install_packer: . ./config/install_packer.sh
+      - unit_test: npm test
       - packer_validate: packer validate config/packer.json
       - packer_build: . ./config/packer_build.sh
-    secrets:
-      - AWS_ACCESS_KEY_ID
-      - AWS_SECRET_ACCESS_KEY
-  deploy:
-    image: python:2
-    environment:
-      AWS_DEFAULT_REGION: us-west-2
-    steps:
-      - install_awscli: pip install --upgrade awscli
-      - test_awscli: aws --version
       - deploy: . ./config/deploy.sh
+      - health_check: . ./config/health_check.sh
+      - func_test: HOST=`/opt/sd/meta get public_dns` npm run functional
     secrets:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
       - SEC_GROUP
       - SUBNET
-  test_it:
-    steps:
-      - install-dependencies: npm install
-      - test: npm run functional
-    secrets:
       - SAUCE_KEY
       - SAUCE_USER

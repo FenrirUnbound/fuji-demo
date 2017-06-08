@@ -9,10 +9,10 @@ describe('E2E Tests', () => {
     });
 
     it('has the correct header title', () =>
-        browser.get('http://screwdriver.cd')
+        browser.get(`http://${process.env.HOST}:8000`)
             .then(() => browser.getTitle())
             .then((title) => {
-                expect(title).to.equal('screwdriver.cd');
+                expect(title).to.equal('Sample app: Flickr slideshow');
             })
     );
 });
